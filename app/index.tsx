@@ -1,9 +1,10 @@
+import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import CurrencyInput from 'react-native-currency-input';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Colors } from '../constants/Colors';
 
 export default function CreatePaymentScreen() {
   const [amount, setAmount] = useState('');
@@ -34,9 +35,10 @@ export default function CreatePaymentScreen() {
               params: { setCurrency: handleSetCurrency, currency },
             });
           }}
-          style={{ marginRight: 10 }}
+          style={[styles.picker]}
         >
-          <Text style={{ fontSize: 16 }}>{currency}</Text>
+          <Text style={styles.pickerText}>{currency}</Text>
+          <Ionicons name="chevron-down" size={16} color={Colors.primary} style={{ marginLeft: 4 }} />
         </TouchableOpacity>
       ),
     });
@@ -81,32 +83,39 @@ export default function CreatePaymentScreen() {
 
   return (
     <View style={styles.container}>
-      <CurrencyInput
-        style={[styles.currencyInput, amount ? {} : { color: '#C0CCDA' }]}
-        value={parseFloat(amount) || 0}
-        onChangeValue={(value) => setAmount(value?.toString() || '')}
-        prefix={currencySymbols[currency]?.prefix || ''}
-        suffix={currencySymbols[currency]?.suffix || ''}
-        delimiter=" "
-        separator=","
-        precision={2}
-      />
+      <View style={{ flex: 1 }}>
+        <CurrencyInput
+          style={[styles.currencyInput, amount ? { color: Colors.primary } : { color: '#C0CCDA' }]}
+          value={parseFloat(amount) || 0}
+          onChangeValue={(value) => setAmount(value?.toString() || '')}
+          prefix={currencySymbols[currency]?.prefix || ''}
+          suffix={currencySymbols[currency]?.suffix || ''}
+          delimiter=" "
+          separator=","
+          precision={2}
+        />
 
-      <Text style={styles.label}>Concepto</Text>
-      <TextInput
-        style={[styles.input]}
-        value={concept}
-        onChangeText={setConcept}
-        placeholder="Añade descripción del pago"
-        placeholderTextColor={styles.placeHolder.color}
-        maxLength={140}
-        multiline
-      />
-      <Text style={{ alignSelf: 'flex-end', color: Colors.light.text, fontSize: 12 }}>
-        {concept.length}/140 caracteres
-      </Text>
+        <Text style={styles.label}>Concepto</Text>
+        <TextInput
+          style={[styles.input]}
+          value={concept}
+          onChangeText={setConcept}
+          placeholder="Añade descripción del pago"
+          placeholderTextColor={styles.placeHolder.color}
+          maxLength={140}
+          multiline
+        />
+        {
+          concept.length > 0 ?
+            <Text style={{ alignSelf: 'flex-end', color: Colors.text, fontSize: 12 }}>
+              {concept.length}/140 caracteres
+            </Text> : null
+        }
+      </View>
 
-      <Button title="Continuar" onPress={createPayment} />
+      <TouchableOpacity style={[styles.customButton, !!amount ? {} : { backgroundColor: '#EAF3FF' }]} onPress={createPayment} disabled={!amount}>
+        <Text style={[styles.customButtonText, !!amount ? {} : { color: '#71B0FD' }]}>Continuar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -117,17 +126,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
   container: {
     flex: 1,
     padding: 16,
@@ -136,7 +134,8 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 8,
-    color: Colors.light.primary,
+    color: Colors.tint,
+    fontWeight: 'bold',
   },
   input: {
     borderWidth: 1,
@@ -156,10 +155,36 @@ const styles = StyleSheet.create({
     fontSize: 40,
     lineHeight: 50,
     fontWeight: 'bold',
-    color: Colors.light.primary,
     paddingVertical: 60
   },
   picker: {
-    marginBottom: 16,
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'space-evenly', 
+    marginRight: 10, 
+    backgroundColor: '#D3DCE64D',
+    width: 70,
+    height: 28,
+    borderRadius: 50,
+  },
+  pickerText: {
+    color: Colors.tint,
+    fontWeight: 'bold',
+    fontSize: 12,
+    textAlign: 'center',
+    lineHeight: 20,
+    paddingHorizontal: 2,
+  },
+  customButton: {
+    backgroundColor: Colors.primary,
+    height: 56,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  customButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
