@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 16.6.1",
+    "version": ">=16.6.1",
     "appVersionSource": "remote"
   },
   "build": {
@@ -15,7 +15,7 @@
     },
     "preview2": {
       "android": {
-        "gradleCommand": ":app:assembleRelease"
+        "gradleCommand": ":app:assembleDebug"
       }
     },
     "production": {

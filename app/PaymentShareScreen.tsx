@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Linking, Share, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Colors } from '@/constants/Colors';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navig
 import CountryPicker from 'react-native-country-picker-modal';
 import { Country, CountryCode } from '../assets/types';
 import ModalScreen from './ModalScreen';
+import { CustomTextInput } from './_layout';
 
 type PaymentShareScreenRouteProp = RouteProp<{ params: { webUrl: string; identifier: string; amount: string; currency: string } }, 'params'>;
 
@@ -147,7 +148,7 @@ export default function PaymentShareScreen() {
                             </View>
                             <Text style={{ marginTop: 2 }}>+{country?.callingCode}</Text>
                         </View>
-                        <TextInput
+                        <CustomTextInput
                             style={[styles.buttons, { paddingLeft: 120, paddingRight: 80 }]}
                             placeholder="Ingresa el número..."
                             keyboardType="phone-pad"

@@ -2,9 +2,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from 'react-native';
 import CurrencyInput from 'react-native-currency-input';
 import { Colors } from '../constants/Colors';
+import { CustomText, CustomTextInput } from './_layout';
 
 export default function CreatePaymentScreen() {
   const [amount, setAmount] = useState('');
@@ -38,7 +39,7 @@ export default function CreatePaymentScreen() {
           }}
           style={[styles.picker]}
         >
-          <Text style={styles.pickerText}>{currency}</Text>
+          <CustomText style={styles.pickerText}>{currency}</CustomText>
           <Ionicons name="chevron-down" size={16} color={Colors.primary} style={{ marginLeft: 4 }} />
         </TouchableOpacity>
       ),
@@ -100,8 +101,8 @@ export default function CreatePaymentScreen() {
           precision={2}
         />
 
-        <Text style={styles.label}>Concepto</Text>
-        <TextInput
+        <CustomText style={styles.label}>Concepto</CustomText>
+        <CustomTextInput
           style={[styles.input]}
           value={concept}
           onChangeText={setConcept}
@@ -112,15 +113,15 @@ export default function CreatePaymentScreen() {
         />
         {
           concept.length > 0 ?
-            <Text style={{ alignSelf: 'flex-end', color: Colors.text, fontSize: 12 }}>
+            <CustomText style={{ alignSelf: 'flex-end', color: Colors.text, fontSize: 12 }}>
               {concept.length}/140 caracteres
-            </Text> : null
+            </CustomText> : null
         }
       </View>
 
       <TouchableOpacity style={[styles.customButton, !!amount && !loading ? {} : { backgroundColor: '#EAF3FF' }]} onPress={createPayment} disabled={!amount && !loading}>
         {loading ? <ActivityIndicator size={24} color={Colors.primary} /> :
-          <Text style={[styles.customButtonText, !!amount && !loading ? {} : { color: '#71B0FD' }]}>Continuar</Text>}
+          <CustomText style={[styles.customButtonText, !!amount && !loading ? {} : { color: '#71B0FD' }]}>Continuar</CustomText>}
       </TouchableOpacity>
     </View>
   );

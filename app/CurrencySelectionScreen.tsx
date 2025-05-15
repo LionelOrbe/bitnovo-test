@@ -2,7 +2,8 @@ import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { CustomTextInput } from './_layout';
 
 const currencies = [
     { label: 'Euro', value: 'EUR', flag: require('../assets/images/eu-flag.png') },
@@ -43,7 +44,7 @@ export default function CurrencySelectionScreen() {
         <View style={styles.container}>
             <View>
                 <Ionicons name="search-sharp" size={30} color={'grey'} style={styles.searchIcon} />
-                <TextInput
+                <CustomTextInput
                     style={styles.searchBar}
                     placeholder="Buscar"
                     value={searchQuery}

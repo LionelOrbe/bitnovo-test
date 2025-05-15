@@ -14,10 +14,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splash.png",
-        "backgroundColor": "#007AFF"
-      },
-      "edgeToEdgeEnabled": true,
-      "package": "com.lionelorbe.bitnovotest"
+        "backgroundColor": "#035AC5"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -29,10 +27,10 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#007AFF"
+          "image": "./assets/images/splash.png",          
+          "resizeMode": "cover",
+          "backgroundColor": "#035AC5",
+          "imageWidth": 350
         }
       ]
     ],

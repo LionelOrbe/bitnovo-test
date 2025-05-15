@@ -2,9 +2,10 @@ import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { formatAmount } from './PaymentShareScreen';
+import { CustomText } from './_layout';
 let QRlogo = require('@/assets/images/qr-icon.png');
 
 type QRScreenProps = RouteProp<{ params: { webUrl: string; amount: string; currency: string } }, 'params'>
@@ -28,13 +29,13 @@ export default function QRScreen() {
         <View style={styles.container}>
             <View style={styles.messageContainer}>
                 <Ionicons name="alert" size={20} color={Colors.icon} style={styles.logo} />
-                <Text style={{ fontSize: 12, lineHeight: 20, color: Colors.active, marginLeft: 15, maxWidth: '80%' }}>Escanea el QR y serás redirigido a la pasarela de pago de Bitnovo Pay.</Text>
+                <CustomText style={{ fontSize: 12, lineHeight: 20, color: Colors.active, marginLeft: 15, maxWidth: '80%' }}>Escanea el QR y serás redirigido a la pasarela de pago de Bitnovo Pay.</CustomText>
             </View>
             <View style={styles.logoContainer}>
                 <QRCode value={webUrl || ''} size={340} logo={QRlogo} logoSize={50} />
             </View>
-            <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white', marginVertical: 20 }}>{formatAmount(amount)} {currency}</Text>
-            <Text style={{ fontSize: 14, color: 'white' }}>Esta pantalla se actualizará automáticamente</Text>
+            <CustomText style={{ fontSize: 30, fontWeight: 'bold', color: 'white', marginVertical: 20 }}>{formatAmount(amount)} {currency}</CustomText>
+            <CustomText style={{ fontSize: 14, color: 'white' }}>Esta pantalla se actualizará automáticamente</CustomText>
         </View>
     );
 }

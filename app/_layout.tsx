@@ -2,6 +2,7 @@ import { Colors } from '@/constants/Colors';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { Text, TextInput } from 'react-native';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -10,7 +11,7 @@ export default function RootLayout() {
     Mulish: require('../assets/fonts/Mulish-Regular.ttf'),
   });
 
-  if (!loaded) {    
+  if (!loaded) {
     return null;
   }
 
@@ -26,16 +27,19 @@ export default function RootLayout() {
   };
 
   return (
-    <SafeAreaProvider style={{ paddingTop: 30}}>     
-        <Stack screenOptions={screenOptions} initialRouteName="index">
-          <Stack.Screen name="index" options={{ headerTitleAlign: "center", headerTitle: 'Crear pago', headerTitleStyle: {fontWeight: 'bold', fontSize: 18} }} />
-          <Stack.Screen name="PaymentShareScreen" options={{ headerShown: false }} />
-          <Stack.Screen name="CurrencySelectionScreen" options={{ headerTitleAlign: "center", headerTitle: 'Selecciona una divisa', headerTitleStyle: {fontWeight: 'bold', fontSize: 18} }} />
-          <Stack.Screen name="SuccessScreen" />
-          <Stack.Screen name="QRScreen" options={{ headerTitle: '' }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style='auto' />      
+    <SafeAreaProvider style={{ paddingBottom: 35 }}>
+      <Stack screenOptions={screenOptions} initialRouteName="index">
+        <Stack.Screen name="index" options={{ headerTitleAlign: "center", headerTitle: 'Crear pago', headerTitleStyle: { fontWeight: 'bold', fontSize: 18 } }} />
+        <Stack.Screen name="PaymentShareScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="CurrencySelectionScreen" options={{ headerTitleAlign: "center", headerTitle: 'Selecciona una divisa', headerTitleStyle: { fontWeight: 'bold', fontSize: 18 } }} />
+        <Stack.Screen name="SuccessScreen" />
+        <Stack.Screen name="QRScreen" options={{ headerTitle: '' }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+      <StatusBar style='auto' />
     </SafeAreaProvider>
   );
 }
+
+export const CustomText = (props: any) => <Text {...props} style={[{ fontFamily: 'Mulish' }, props.style]} />;
+export const CustomTextInput = (props: any) => <TextInput {...props} style={[{ fontFamily: 'Mulish' }, props.style]} />;
