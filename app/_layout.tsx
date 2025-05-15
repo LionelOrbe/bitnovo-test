@@ -31,7 +31,8 @@ export default function RootLayout() {
           <Stack.Screen name="index" options={{ headerTitleAlign: "center", headerTitle: 'Crear pago', headerTitleStyle: {fontWeight: 'bold', fontSize: 18} }} />
           <Stack.Screen name="PaymentShareScreen" options={{ headerShown: false }} />
           <Stack.Screen name="CurrencySelectionScreen" options={{ headerTitleAlign: "center", headerTitle: 'Selecciona una divisa', headerTitleStyle: {fontWeight: 'bold', fontSize: 18} }} />
-          <Stack.Screen name="SuccessScreen" options={{ headerShown: false }} />
+          <Stack.Screen name="SuccessScreen" />
+          <Stack.Screen name="QRScreen" options={{ headerTitle: '' }} />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style='auto' />      

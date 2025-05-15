@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import CurrencyInput from 'react-native-currency-input';
 import { Colors } from '../constants/Colors';
 
@@ -10,9 +10,10 @@ export default function CreatePaymentScreen() {
   const [amount, setAmount] = useState('');
   const [concept, setConcept] = useState('');
   const [currency, setCurrency] = useState('EUR');
+  const [loading, setLoading] = useState(false);
 
   type RootStackParamList = {
-    PaymentShareScreen: { webUrl: string; identifier: string };
+    PaymentShareScreen: { webUrl: string; identifier: string; amount: string; currency: string };
     CurrencySelectionScreen: { setCurrency: (currency: string) => void, currency: string };
   };
 
@@ -45,6 +46,7 @@ export default function CreatePaymentScreen() {
   }, [currency, navigation, handleSetCurrency]);
 
   const createPayment = async () => {
+    setLoading(true);
     try {
       const response = await axios.post('https://payments.pre-bnvo.com/api/v1/orders/', {
         "identifier": "string",
@@ -68,11 +70,14 @@ export default function CreatePaymentScreen() {
         navigation.navigate('PaymentShareScreen', {
           webUrl: response.data.web_url,
           identifier: response.data.identifier,
+          amount,
+          currency: currencySymbols[currency]?.suffix || currencySymbols[currency]?.prefix ||'',
         });
       }
     } catch (error) {
       console.error('Error creating payment:', error);
     }
+    setLoading(false);
   };
 
   const currencySymbols: Record<string, { prefix: string; suffix: string }> = {
@@ -113,8 +118,9 @@ export default function CreatePaymentScreen() {
         }
       </View>
 
-      <TouchableOpacity style={[styles.customButton, !!amount ? {} : { backgroundColor: '#EAF3FF' }]} onPress={createPayment} disabled={!amount}>
-        <Text style={[styles.customButtonText, !!amount ? {} : { color: '#71B0FD' }]}>Continuar</Text>
+      <TouchableOpacity style={[styles.customButton, !!amount && !loading ? {} : { backgroundColor: '#EAF3FF' }]} onPress={createPayment} disabled={!amount && !loading}>
+        {loading ? <ActivityIndicator size={24} color={Colors.primary} /> :
+          <Text style={[styles.customButtonText, !!amount && !loading ? {} : { color: '#71B0FD' }]}>Continuar</Text>}
       </TouchableOpacity>
     </View>
   );
@@ -158,10 +164,10 @@ const styles = StyleSheet.create({
     paddingVertical: 60
   },
   picker: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly', 
-    marginRight: 10, 
+    justifyContent: 'space-evenly',
+    marginRight: 10,
     backgroundColor: '#D3DCE64D',
     width: 70,
     height: 28,
