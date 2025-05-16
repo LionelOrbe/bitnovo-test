@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splash.png",
         "backgroundColor": "#035AC5"
-      }
+      },
+      "package": "com.lionelorbe.bitnovotest"
     },
     "web": {
       "bundler": "metro",
@@ -27,7 +28,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash.png",          
+          "image": "./assets/images/splash.png",
           "resizeMode": "cover",
           "backgroundColor": "#035AC5",
           "imageWidth": 350
